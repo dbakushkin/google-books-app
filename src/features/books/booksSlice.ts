@@ -21,6 +21,6 @@ export const booksSlice = createSlice({
   },
 });
 
-export const selectChats = (state: any) => state.chats.chats;
+export const booksChats = (state: any) => state.books;
 
 export default booksSlice.reducer;
