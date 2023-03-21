@@ -10,20 +10,30 @@ import {
 import Button from "@mui/material/Button";
 import { FC, useState } from "react";
 import { useForm } from "react-hook-form";
+import { getBooks } from "../features/books/booksSlice";
 import SortBlock from "./SortBlock";
 
 type FormData = {
   text: string;
 };
 
+const;
+
 const SearchBlock: FC = () => {
   const {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<FormData>();
 
-  const [category, setCategory] = useState("ll");
+  const onFormSubmit = handleSubmit((data) => {
+    console.log(data);
+    getBooks(data);
+    reset();
+  });
+
+  const [category, setCategory] = useState("");
 
   const [sortMethod, setSortMethod] = useState("");
   const handleCategoryChange = (event: SelectChangeEvent) => {
@@ -36,7 +46,7 @@ const SearchBlock: FC = () => {
 
   return (
     <div>
-      <FormControl fullWidth>
+      <FormControl onSubmit={onFormSubmit} fullWidth>
         <TextField
           {...register("text", { required: true })}
           placeholder="Введите ваш комментарий"
