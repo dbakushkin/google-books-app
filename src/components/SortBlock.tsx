@@ -1,17 +1,11 @@
-import {
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-} from "@mui/material";
-import { FC } from "react";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
+import { ChangeEventHandler, FC } from "react";
 
 type SortProps = {
   category: string;
   sortMethod: string;
-  handleCategoryChange: () => void;
-  handleSortMethodChange: () => void;
+  handleCategoryChange: (e: any) => void;
+  handleSortMethodChange: (e: any) => void;
 };
 
 const SortBlock: FC<SortProps> = ({
@@ -51,10 +45,10 @@ const SortBlock: FC<SortProps> = ({
           label="Сортировать по"
           onChange={handleSortMethodChange}
         >
-          <MenuItem selected={true} value={"all"}>
+          <MenuItem selected={true} value={"relevance"}>
             Relevance
           </MenuItem>
-          <MenuItem value={"art"}>Newest</MenuItem>
+          <MenuItem value={"newest"}>Newest</MenuItem>
         </Select>
       </FormControl>
     </div>

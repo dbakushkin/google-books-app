@@ -1,12 +1,17 @@
 import Container from "@mui/material/Container";
-import React from "react";
-import "./App.css";
-import SearchBlock from "./components/SearchBlock";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import BookItem from "./components/BookItem";
+import MainPage from "./components/MainPage";
 
 function App() {
   return (
     <Container maxWidth="sm">
-      <SearchBlock />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<MainPage />} />
+          <Route path="/book/:id" element={<BookItem />} />
+        </Routes>
+      </BrowserRouter>
     </Container>
   );
 }

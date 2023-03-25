@@ -1,67 +1,66 @@
-import {
-  Alert,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  SelectChangeEvent,
-  TextField,
-} from "@mui/material";
+import { FormControl, TextField } from "@mui/material";
 import Button from "@mui/material/Button";
-import { FC, useState } from "react";
-import { useForm } from "react-hook-form";
-import { getBooks } from "../features/books/booksSlice";
+import { ChangeEventHandler, FC } from "react";
+import { useAppDispatch, useAppSelector } from "../app/hooks";
+import {
+  changeQueryTerm,
+  changeCategory,
+  fetchBooks,
+  changeOrder,
+} from "../features/books/booksSlice";
 import SortBlock from "./SortBlock";
 
-type FormData = {
-  text: string;
-};
-
-const;
-
 const SearchBlock: FC = () => {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm<FormData>();
+  const dispatch = useAppDispatch();
+  const { category, order, queryTerm } = useAppSelector((state) => state.books);
 
-  const onFormSubmit = handleSubmit((data) => {
-    console.log(data);
-    getBooks(data);
-    reset();
-  });
-
-  const [category, setCategory] = useState("");
-
-  const [sortMethod, setSortMethod] = useState("");
-  const handleCategoryChange = (event: SelectChangeEvent) => {
-    setCategory(event.target.value);
+  const handleFormSubmit: any = (event: any) => {
+    event.preventDefault();
+    dispatch(fetchBooks());
   };
 
-  const handleSortMethodChange = (event: SelectChangeEvent) => {
-    setSortMethod(event.target.value);
+  const handleQueryTermChange: ChangeEventHandler<HTMLInputElement> = (
+    event
+  ) => {
+    dispatch(changeQueryTerm(event.target.value));
+  };
+
+  const handleCategoryChange: ChangeEventHandler<HTMLSelectElement> = (
+    event
+  ) => {
+    dispatch(changeCategory(event.target.value));
+    if (queryTerm) {
+      dispatch(fetchBooks());
+    }
+  };
+
+  const handleSortMethodChange: ChangeEventHandler<HTMLSelectElement> = (
+    event
+  ) => {
+    dispatch(changeOrder(event.target.value));
+    if (queryTerm) {
+      dispatch(fetchBooks());
+    }
   };
 
   return (
     <div>
-      <FormControl onSubmit={onFormSubmit} fullWidth>
+      <FormControl onSubmit={handleFormSubmit} fullWidth>
         <TextField
-          {...register("text", { required: true })}
-          placeholder="Введите ваш комментарий"
+          value={queryTerm}
+          onChange={handleQueryTermChange}
+          placeholder="Введите ваш запрос"
         />
-        {errors.text && <Alert severity="error">Введите название книги</Alert>}
         <Button variant="contained" color="primary" type="submit">
           {" "}
           Поиск
         </Button>
       </FormControl>
       <SortBlock
-        handleCategoryChange={() => handleCategoryChange}
-        handleSortMethodChange={() => handleSortMethodChange}
+        handleCategoryChange={handleCategoryChange}
+        handleSortMethodChange={handleSortMethodChange}
         category={category}
-        sortMethod={sortMethod}
+        sortMethod={order}
       />
     </div>
   );
