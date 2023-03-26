@@ -15,7 +15,7 @@ export interface BooksState {
   areThereMore: boolean;
   queryTerm: string;
   category: string;
-  order: string;
+  orderBy: string;
   startIndex: number;
 }
 

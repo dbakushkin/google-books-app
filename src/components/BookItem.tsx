@@ -30,11 +30,6 @@ const BookItem: FC = () => {
           <CardHeader
             title={book.title}
             subheader={book.authors.join(", ")}
-            sx={{
-              display: "flex",
-
-              alignItems: "center",
-            }}
           ></CardHeader>
           {book.coverImage && (
             <CardMedia
@@ -48,8 +43,14 @@ const BookItem: FC = () => {
           )}
 
           <CardContent>
-            <Typography> Category: {book.categories.join(", ")}</Typography>
-            <Typography>{book.description}</Typography>
+            <Typography>
+              {" "}
+              <b>Category:</b> {book.categories.join(", ")}
+            </Typography>
+            <Typography>
+              <b>Description :</b>
+              {book.description}
+            </Typography>
           </CardContent>
         </Card>
       )}

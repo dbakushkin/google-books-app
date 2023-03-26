@@ -12,7 +12,9 @@ import SortBlock from "./SortBlock";
 
 const SearchBlock: FC = () => {
   const dispatch = useAppDispatch();
-  const { category, order, queryTerm } = useAppSelector((state) => state.books);
+  const { category, orderBy, queryTerm } = useAppSelector(
+    (state) => state.books
+  );
 
   const handleFormSubmit: any = (event: any) => {
     event.preventDefault();
@@ -70,7 +72,7 @@ const SearchBlock: FC = () => {
         handleCategoryChange={handleCategoryChange}
         handleSortMethodChange={handleSortMethodChange}
         category={category}
-        sortMethod={order}
+        sortMethod={orderBy}
       />
     </div>
   );

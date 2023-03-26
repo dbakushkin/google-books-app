@@ -8,14 +8,15 @@ import {
 } from "../../types/book";
 
 const maxLength = 30;
+
 const getSearchUrl = ({
   category,
-  order,
+  orderBy,
   queryTerm,
   startIndex,
 }: {
   category: string;
-  order: string;
+  orderBy: string;
   queryTerm: string;
   startIndex: number;
 }) => {
@@ -28,7 +29,7 @@ const getSearchUrl = ({
 
   const searchParams = new URLSearchParams({
     q: query,
-    order,
+    orderBy,
     startIndex: String(startIndex),
     maxResults: String(maxLength),
     key,
@@ -36,6 +37,7 @@ const getSearchUrl = ({
 
   const url = new URL("https://www.googleapis.com/books/v1/volumes");
   url.search = searchParams.toString();
+  console.log(url);
 
   return url;
 };
@@ -46,7 +48,7 @@ const initialState: BooksState = {
   error: null,
   areThereMore: false,
   category: " ",
-  order: "relevance",
+  orderBy: "relevance",
   queryTerm: "",
   startIndex: 0,
 };
@@ -63,8 +65,8 @@ const mapResponseToBook = (book: FetchBooksItem): Book => {
 
 const fetchBooksHelper = async (getState: () => RootState) => {
   const state = getState();
-  const { category, order, queryTerm, startIndex } = state.books;
-  const url = getSearchUrl({ category, order, queryTerm, startIndex });
+  const { category, orderBy, queryTerm, startIndex } = state.books;
+  const url = getSearchUrl({ category, orderBy, queryTerm, startIndex });
   const response = await fetch(url);
 
   return await response.json();
@@ -94,8 +96,7 @@ const booksSlice = createSlice({
       state.category = action.payload;
     },
     changeOrder: (state, action: PayloadAction<string>) => {
-      state.order = action.payload;
-      console.log(state.order);
+      state.orderBy = action.payload;
     },
     changeQueryTerm: (state, action: PayloadAction<string>) => {
       state.queryTerm = action.payload;
