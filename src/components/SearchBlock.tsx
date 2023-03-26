@@ -1,4 +1,4 @@
-import { FormControl, TextField } from "@mui/material";
+import { TextField } from "@mui/material";
 import Button from "@mui/material/Button";
 import { ChangeEventHandler, FC } from "react";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
@@ -28,7 +28,9 @@ const SearchBlock: FC = () => {
   const handleCategoryChange: ChangeEventHandler<HTMLSelectElement> = (
     event
   ) => {
+    console.log(event.target.value);
     dispatch(changeCategory(event.target.value));
+
     if (queryTerm) {
       dispatch(fetchBooks());
     }
@@ -37,6 +39,7 @@ const SearchBlock: FC = () => {
   const handleSortMethodChange: ChangeEventHandler<HTMLSelectElement> = (
     event
   ) => {
+    console.log(event.target.value);
     dispatch(changeOrder(event.target.value));
     if (queryTerm) {
       dispatch(fetchBooks());
@@ -45,17 +48,24 @@ const SearchBlock: FC = () => {
 
   return (
     <div>
-      <FormControl onSubmit={handleFormSubmit} fullWidth>
+      <form onSubmit={handleFormSubmit}>
         <TextField
           value={queryTerm}
           onChange={handleQueryTermChange}
           placeholder="Введите ваш запрос"
+          fullWidth
         />
-        <Button variant="contained" color="primary" type="submit">
+        <Button
+          sx={{ mt: 1 }}
+          variant="contained"
+          color="primary"
+          type="submit"
+          fullWidth
+        >
           {" "}
           Поиск
         </Button>
-      </FormControl>
+      </form>
       <SortBlock
         handleCategoryChange={handleCategoryChange}
         handleSortMethodChange={handleSortMethodChange}

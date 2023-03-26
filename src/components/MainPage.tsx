@@ -1,4 +1,4 @@
-import { CircularProgress } from "@mui/material";
+import { Button, CircularProgress } from "@mui/material";
 import { FC } from "react";
 import { useAppDispatch, useAppSelector } from "../app/hooks";
 import { loadMore } from "../features/books/booksSlice";
@@ -20,11 +20,21 @@ const MainPage: FC = () => {
 
   return (
     <div>
-      {totalItems !== undefined && <h5>Found {totalItems} results</h5>}
       <SearchBlock />
       {loading && <CircularProgress />}
+      {totalItems && <h5>Found {totalItems} results</h5>}
       <ResultBlock books={books} />
-      {areThereMore && <button onClick={handleLoadMore}> Загрузить ещё</button>}
+      {areThereMore && (
+        <Button
+          variant="contained"
+          sx={{ mt: 2 }}
+          fullWidth
+          onClick={handleLoadMore}
+        >
+          {" "}
+          Загрузить ещё
+        </Button>
+      )}
     </div>
   );
 };

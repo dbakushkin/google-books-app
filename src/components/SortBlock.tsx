@@ -1,5 +1,5 @@
 import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
-import { ChangeEventHandler, FC } from "react";
+import { FC } from "react";
 
 type SortProps = {
   category: string;
@@ -16,8 +16,10 @@ const SortBlock: FC<SortProps> = ({
 }) => {
   return (
     <div>
-      <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label">Категории</InputLabel>
+      <FormControl sx={{ mt: 2 }} fullWidth>
+        <InputLabel id="demo-simple-select-label">
+          Выберите категорию
+        </InputLabel>
         <Select
           labelId="category-select-label"
           id="category-select"
@@ -25,9 +27,7 @@ const SortBlock: FC<SortProps> = ({
           label="Категории"
           onChange={handleCategoryChange}
         >
-          <MenuItem selected={true} value={"all"}>
-            All
-          </MenuItem>
+          <MenuItem value={" "}>All</MenuItem>
           <MenuItem value={"art"}>Art</MenuItem>
           <MenuItem value={"biography"}>Biography</MenuItem>
           <MenuItem value={"computers"}>Computers</MenuItem>
@@ -36,7 +36,7 @@ const SortBlock: FC<SortProps> = ({
           <MenuItem value={"poetry"}>Poetry</MenuItem>
         </Select>
       </FormControl>
-      <FormControl fullWidth>
+      <FormControl sx={{ mt: 2 }} fullWidth>
         <InputLabel id="demo-simple-select-label">Сортировать по</InputLabel>
         <Select
           labelId="sort-select-label"
@@ -45,9 +45,7 @@ const SortBlock: FC<SortProps> = ({
           label="Сортировать по"
           onChange={handleSortMethodChange}
         >
-          <MenuItem selected={true} value={"relevance"}>
-            Relevance
-          </MenuItem>
+          <MenuItem value={"relevance"}>Relevance</MenuItem>
           <MenuItem value={"newest"}>Newest</MenuItem>
         </Select>
       </FormControl>
